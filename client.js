@@ -1,18 +1,5 @@
 $ ( document ).ready( readyNow );
 
-function readyNow(){
-    console.log('JQ');
-    $('#employeeButton').on('click', displayEmployees);
-} // end readyNow
-
-function displayEmployees() {
-  let outputElement = $('#employeeList');
-  outputElement.empty();
-  for (let employee of newEmployees) {
-    outputElement.append('<li>' + employee.name + ' ' + employee.bonusPercentage + '%    $' + employee.totalCompensation + ' $' + employee.totalBonus + '</li>')
-  }
-}
-
 class Employee{
   constructor( name, employeeNumber, annualSalary, reviewRating ){
     this.name = name;
@@ -50,10 +37,10 @@ function newEmployeeData(employee) {
   // assign name
   newEmployee = {
     name: employee.name ,
-    bonusPercentage: percentageCaclutation(employee)
+    bonusPercentage: (percentageCaclutation(employee)) / 100
   }
-  newEmployee.totalBonus = bonusCalculation(newEmployee, employee)
-  newEmployee.totalCompensation = compensationCalculation(newEmployee, employee)
+  newEmployee.totalBonus = bonusCalculation(newEmployee, employee);
+  newEmployee.totalCompensation = compensationCalculation(newEmployee, employee);
   console.log(newEmployee);
   newEmployees.push(newEmployee);
   return newEmployees;
@@ -89,5 +76,18 @@ function compensationCalculation(newEmployee, employee){
 }
 
 function bonusCalculation(newEmployee, employee){
-  return Math.round(parseInt(employee.annualSalary) * (newEmployee.bonusPercentage / 100)) ;
+  return Math.round(parseInt(employee.annualSalary) * newEmployee.bonusPercentage);
+}
+
+function readyNow(){
+    console.log('JQ');
+    $('#employeeButton').on('click', displayEmployees);
+} // end readyNow
+
+function displayEmployees() {
+  let outputElement = $('#employeeList');
+  outputElement.empty();
+  for (let employee of newEmployees) {
+    outputElement.append('<li>Name: ' + employee.name + '<br>Bonus Percentage: ' + employee.bonusPercentage * 100 + '%<br>Total Compensation: $' + employee.totalCompensation + '<br>Total Bonus: $' + employee.totalBonus + '</li>')
+  }
 }
