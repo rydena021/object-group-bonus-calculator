@@ -1,7 +1,6 @@
 body {
   background-color: #D3D3D3;
-  font-family: 'Kumar One Outline', cursive;
-
+  font-family: 'Righteous', cursive;
 }
 
 button {
@@ -15,4 +14,8 @@ button {
     font-size: 16px;
     margin: 4px 2px;
     cursor: pointer;
+}
+
+h1 {
+    font-family: 'Kumar One Outline', cursive;
 }
