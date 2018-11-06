@@ -1,3 +1,18 @@
+$ ( document ).ready( readyNow );
+
+function readyNow(){
+    console.log('JQ');
+    $('#employeeButton').on('click', displayEmployees);
+} // end readyNow
+
+function displayEmployees() {
+  let outputElement = $('#employeeList');
+  outputElement.empty();
+  for (let employee of newEmployees) {
+    outputElement.append('<li>' + employee.name + ' ' + employee.bonusPercentage + '%    $' + employee.totalCompensation + ' $' + employee.totalBonus + '</li>')
+  }
+}
+
 class Employee{
   constructor( name, employeeNumber, annualSalary, reviewRating ){
     this.name = name;
@@ -24,4 +39,55 @@ const employees = [ atticus, jem, scout, robert, mayella ]; // this is an array 
 // This is not a race. Everyone on your team should understand what is happening.
 // Ask questions when you don't.
 
-console.log( employees );
+
+let newEmployees = [];
+// loop through employees
+for (let employee of employees) {
+  newEmployeeData(employee);
+}
+
+function newEmployeeData(employee) {
+  // assign name
+  newEmployee = {
+    name: employee.name ,
+    bonusPercentage: percentageCaclutation(employee)
+  }
+  newEmployee.totalBonus = bonusCalculation(newEmployee, employee)
+  newEmployee.totalCompensation = compensationCalculation(newEmployee, employee)
+  console.log(newEmployee);
+  newEmployees.push(newEmployee);
+  return newEmployees;
+}
+
+function percentageCaclutation(employee) {
+  let bonusPercentage = 0
+  if (employee.employeeNumber.length == 4) {
+    bonusPercentage += 5;
+  }
+  if (parseInt(employee.annualSalary) > 65000){
+    bonusPercentage -= 1;
+  }
+  if (employee.reviewRating == 5) {
+    bonusPercentage += 10;
+  } else if (employee.reviewRating == 4) {
+    bonusPercentage += 6;
+  } else if (employee.reviewRating == 3) {
+    bonusPercentage += 4;
+  } else {
+    bonusPercentage = 0;
+  }
+  if (bonusPercentage > 13) {
+    bonusPercentage = 13;
+  } else if (bonusPercentage < 0) {
+    bonusPercentage = 0
+  }
+  return bonusPercentage;
+}
+
+function compensationCalculation(newEmployee, employee){
+  return parseInt(employee.annualSalary) + newEmployee.totalBonus;
+}
+
+function bonusCalculation(newEmployee, employee){
+  return Math.round(parseInt(employee.annualSalary) * (newEmployee.bonusPercentage / 100)) ;
+}
