@@ -37,7 +37,7 @@ function newEmployeeData(employee) {
   // assign name
   newEmployee = {
     name: employee.name ,
-    bonusPercentage: (percentageCaclutation(employee)) / 100
+    bonusPercentage: percentageCaclutation(employee)
   }
   newEmployee.totalBonus = bonusCalculation(newEmployee, employee);
   newEmployee.totalCompensation = compensationCalculation(newEmployee, employee);
@@ -68,7 +68,7 @@ function percentageCaclutation(employee) {
   } else if (bonusPercentage < 0) {
     bonusPercentage = 0
   }
-  return bonusPercentage;
+  return bonusPercentage / 100;
 }
 
 function compensationCalculation(newEmployee, employee){
